@@ -1,6 +1,7 @@
 {
     "version": 2,
-    "name": "frontend",
+    "name": "polls-frontend",
+    "regions": ["cdg1"],
     "builds": [
         { "src": "next.config.js", "use": "@now/next" }
     ]
