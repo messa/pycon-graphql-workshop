@@ -1,6 +1,10 @@
+import Layout from '../components/Layout'
+
 function HomePage() {
   return (
-    <h1>Hello World!</h1>
+    <Layout currentPage='home'>
+      <h1>Hello World!</h1>
+    </Layout>
   )
 }
 
