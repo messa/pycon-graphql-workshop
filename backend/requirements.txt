@@ -1,4 +1,5 @@
 aiohttp
+dnspython
 motor
 aiohttp-graphql
 graphene
