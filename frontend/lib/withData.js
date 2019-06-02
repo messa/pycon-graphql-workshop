@@ -20,7 +20,7 @@ export default (ComposedComponent, options = {}) => {
       if (options.query) {
         // Provide the `url` prop data in case a graphql query uses it
         // const url = { query: ctx.query, pathname: ctx.pathname }
-        const variables = {}
+        const variables = options.getVariables ? options.getVariables(ctx) : (composedInitialProps.relayVariables || {})
         // TODO: Consider RelayQueryResponseCache
         // https://github.com/facebook/relay/issues/1687#issuecomment-302931855
         queryProps = await fetchQuery(environment, options.query, variables)

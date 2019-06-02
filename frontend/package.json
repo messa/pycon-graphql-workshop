@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node server",
-    "build": "next build",
+    "dev": "npm run relay && node server",
+    "build": "npm run relay && next build",
     "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/schema/**' --schema ./schema.graphql",
     "start": "NODE_ENV=production node start",
     "schema": "get-graphql-schema http://localhost:8080/graphql > schema.graphql",

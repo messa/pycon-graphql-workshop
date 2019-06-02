@@ -1,5 +1,7 @@
-import Layout from '../components/Layout'
+import React from 'react'
+import Link from 'next/link'
 import { graphql } from 'react-relay'
+import Layout from '../components/Layout'
 import withData from '../lib/withData'
 
 function IndexPage(props) {
@@ -9,7 +11,7 @@ function IndexPage(props) {
       <h1>Polls</h1>
       {polls.map(poll => (
         <div key={poll.id}>
-          <h2>{poll.title}</h2>
+          <h2><Link href={`/poll?id=${poll.id}`}><a>{poll.title}</a></Link></h2>
         </div>
       ))}
     </Layout>
