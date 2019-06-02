@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 
-const githubRepo = 'https://github.com/messa/graphql-workshop'
+const githubRepo = 'https://github.com/messa/pycon-graphql-workshop'
 
 function AboutPage() {
   return (
