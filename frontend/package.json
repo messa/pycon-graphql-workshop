@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "node server",
     "build": "next build",
     "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/schema/**' --schema ./schema.graphql",
-    "start": "next start",
+    "start": "NODE_ENV=production node start",
     "schema": "get-graphql-schema http://localhost:8080/graphql > schema.graphql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.5.1",
     "graphql": "^14.3.1",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.1.0",

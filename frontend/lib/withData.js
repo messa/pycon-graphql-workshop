@@ -15,7 +15,7 @@ export default (ComposedComponent, options = {}) => {
 
       let queryProps = {}
       let queryRecords = {}
-      const environment = initEnvironment()
+      const environment = initEnvironment({ req: ctx.req })
 
       if (options.query) {
         // Provide the `url` prop data in case a graphql query uses it
