@@ -47,6 +47,10 @@ const css = `
   nav a, nav strong {
     padding: 1px 8px;
   }
+
+  h2 {
+    font-weight: 300;
+  }
 `
 
 export default Layout

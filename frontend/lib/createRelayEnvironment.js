@@ -1,12 +1,15 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime'
 import fetch from 'isomorphic-unfetch'
 
+const defaultGraphQLEndpoint = 'http://127.0.0.1:8080/graphql'
+
 let relayEnvironment = null
 
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
-function fetchQuery (operation, variables, cacheConfig, uploadables) {
-  return fetch(process.env.RELAY_ENDPOINT, {
+async function fetchQuery (operation, variables, cacheConfig, uploadables) {
+  const graphQLEndpoint = process.browser ? '/graphql' : (process.env.GRAPHQL_ENDPOINT || defaultGraphQLEndpoint)
+  const fetchOptions = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -16,7 +19,9 @@ function fetchQuery (operation, variables, cacheConfig, uploadables) {
       query: operation.text, // GraphQL text from input
       variables
     })
-  }).then(response => response.json())
+  }
+  const response = await fetch(graphQLEndpoint, fetchOptions)
+  return await response.json()
 }
 
 export default function initEnvironment ({ records = {} } = {}) {

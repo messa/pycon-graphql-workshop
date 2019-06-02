@@ -6,14 +6,25 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/schema/**' --schema ./schema.graphql",
     "start": "next start",
+    "schema": "get-graphql-schema http://localhost:8080/graphql > schema.graphql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "graphql": "^14.3.1",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^8.1.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-relay": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^4.0.0",
+    "get-graphql-schema": "^2.1.2",
+    "graphql-cli": "^3.0.11",
+    "relay-compiler": "^4.0.0"
   }
 }
