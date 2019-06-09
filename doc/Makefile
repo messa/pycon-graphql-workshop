@@ -8,8 +8,11 @@ open:
 	make html
 	open _build/html/index.html
 
+clean:
+	rm -rf _build
+
 $(venv_dir)/packages-installed: requirements.txt
-	$(python3) -m venv $(venv_dir)
+	test -d $(venv_dir) || $(python3) -m venv $(venv_dir)
 	$(venv_dir)/bin/pip install -U pip wheel
 	$(venv_dir)/bin/pip install -r requirements.txt
 	touch $@
