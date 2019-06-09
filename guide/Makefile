@@ -11,6 +11,11 @@ open:
 clean:
 	rm -rf _build
 
+deploy:
+	make clean
+	make html
+	now deploy --local-config=$(PWD)/now.json --target=production _build/html
+
 $(venv_dir)/packages-installed: requirements.txt
 	test -d $(venv_dir) || $(python3) -m venv $(venv_dir)
 	$(venv_dir)/bin/pip install -U pip wheel
