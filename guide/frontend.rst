@@ -58,6 +58,13 @@ This is how a Javascript object looks like::
         console.info(`This is a ${this.color} apple`)
       },
     }
+    
+    console.info(apple.red)
+    // prints: red
+
+    // this is another way how to access object properties - kind of like Python getattr
+    console.info(apple['red'])
+    // prints: red
 
     apple.about()
     // prints: This is a red apple
@@ -90,9 +97,10 @@ This is crazy, right? An object "method" should stay connected to the object! An
     const orange = {
       color: 'orange',
     }
-    orange.descripbe = apple.descripbe
-    orange.descripbe()
+    orange.describe = apple.describe
+    orange.describe()
     // prints: This is a red apple
+
 
 Classes
 ~~~~~~~
@@ -110,7 +118,7 @@ Another thing we are going to need are *classes*. Yes, Javascript has classess! 
         console.info(`This is a ${this.color} ${this.type}`)
       }
 
-      describe: () => {
+      describe = () => {
         console.info(`This is a ${this.color} ${this.type}`)
       }
 
@@ -120,8 +128,22 @@ Another thing we are going to need are *classes*. Yes, Javascript has classess! 
 
 The difference between `about` and `describe` methods are the same as above (in the object example) :)
 
+
+Introspection
+~~~~~~~~~~~~~
+
+If you want to know what some value is or what keys it has, you can just print it::
+
+    console.info(typeof apple)
+    // prints: object
+
+    console.info(Object.keys(apple))
+    // prints: ["color", "about", "describe"]
+
+
 Arrays
 ~~~~~~
+
 
 
 
