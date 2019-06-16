@@ -1,8 +1,11 @@
 import asyncio
-from graphene import Schema, ObjectType, Field
+from graphene import Schema, ObjectType, Field, Mutation
 from graphene import Int, String, DateTime, Boolean, List
 from graphene.relay import Node as RelayNode, Connection, ConnectionField
 from .. import model
+
+
+# Documentation: https://docs.graphene-python.org/en/latest/types/schema/
 
 
 class Node (RelayNode):
@@ -51,4 +54,23 @@ class Query (ObjectType):
         model = info.context['request'].app['model']
         return await model.list_polls()
 
-graphql_schema = Schema(query=Query)
+
+class CreatePoll (Mutation):
+
+    class Arguments:
+        title = String()
+
+    poll = Field(Poll)
+
+    async def mutate(root, info, title):
+        model = info.context['request'].app['model']
+        poll = await model.create_poll(title=title)
+        return CreatePoll(poll=poll)
+
+
+class Mutations (ObjectType):
+
+    create_poll = CreatePoll.Field()
+
+
+graphql_schema = Schema(query=Query, mutation=Mutations)

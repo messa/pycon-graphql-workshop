@@ -19,7 +19,7 @@ GraphQLView.attach(application, schema=graphql_schema, graphiql=True, executor=A
 # example how the full connection (MONGO_URI) string looks like:
 # "mongodb+srv://user0:PaSsWoRd@cluster0-zzj1c.mongodb.net/test?retryWrites=true&w=majority"
 
-client = AsyncIOMotorClient(os.environ['MONGO_URI'])
+client = AsyncIOMotorClient(os.environ.get('MONGO_URI') or 'mongodb://127.0.0.1:27017')
 db_name = os.environ.get('MONGO_DB_NAME') or 'poll_app'
 db = client[db_name]
 

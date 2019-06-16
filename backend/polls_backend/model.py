@@ -1,4 +1,5 @@
-from bson import ObjectId
+from secrets import token_hex
+
 
 class Model:
 
@@ -10,7 +11,15 @@ class Model:
         return [Poll(doc) for doc in poll_docs]
 
     async def get_poll(self, poll_id):
-        return Poll(await self.db['polls'].find_one({'_id': ObjectId(poll_id)}))
+        return Poll(await self.db['polls'].find_one({'_id': poll_id}))
+
+    async def create_poll(self, title):
+        doc = {
+            '_id': token_hex(4),
+            'title': title,
+        }
+        await self.db['polls'].insert_one(doc)
+        return Poll(doc)
 
 
 class Poll:
