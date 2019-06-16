@@ -1,7 +1,7 @@
 import asyncio
 from graphene import Schema, ObjectType, Field, Mutation
 from graphene import Int, String, DateTime, Boolean, List
-from graphene.relay import Node as RelayNode, Connection, ConnectionField
+from graphene.relay import Node as RelayNode, Connection, ConnectionField, ClientIDMutation
 from .. import model
 
 
@@ -68,15 +68,16 @@ class Query (ObjectType):
         return await model.list_polls()
 
 
-class CreatePoll (Mutation):
+class CreatePoll (ClientIDMutation):
 
-    class Arguments:
-        title = String()
-        choices = List(String)
+    class Input:
+        title = String(required=True)
+        choices = List(String, required=True)
 
     poll = Field(Poll)
 
-    async def mutate(root, info, title, choices):
+    @classmethod
+    async def mutate_and_get_payload(cls, root, info, title, choices):
         model = info.context['request'].app['model']
         poll = await model.create_poll(title=title, choices=choices)
         return CreatePoll(poll=poll)
