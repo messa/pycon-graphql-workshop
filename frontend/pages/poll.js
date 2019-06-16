@@ -4,12 +4,15 @@ import { graphql } from 'react-relay'
 import Layout from '../components/Layout'
 import withData from '../lib/withData'
 
-function PollPage(props) {
-  return (
-    <Layout>
-      <h1>Poll: {props.poll.title}</h1>
-    </Layout>
-  )
+class PollPage extends React.Component {
+
+  render() {
+    return (
+      <Layout>
+        <h1>Poll: {this.props.poll.title}</h1>
+      </Layout>
+    )
+  }
 }
 
 export default withData(PollPage, {
