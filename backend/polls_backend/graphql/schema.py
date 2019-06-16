@@ -14,7 +14,7 @@ class Node (RelayNode):
     def resolve_type(instance, info):
         if isinstance(instance, model.Poll):
             return Poll
-        raise Exception(f'Unknown type: {instance!r}')
+        raise Exception('Unknown type: {!r}'.format(instance))
 
 
 class PollChoice (ObjectType):
@@ -61,7 +61,7 @@ class Query (ObjectType):
 
     async def resolve_hello(root, info, name='World'):
         await asyncio.sleep(1)
-        return f"Hello, {name}!"
+        return "Hello, {name}!".format(name=name)
 
     async def resolve_polls(root, info):
         model = info.context['request'].app['model']

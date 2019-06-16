@@ -1,4 +1,9 @@
-from secrets import token_hex
+try:
+    from secrets import token_hex
+except ImportError:
+    def token_hex():
+        from uuid import uuid4
+        return uuid4().hex
 
 
 class Model:
