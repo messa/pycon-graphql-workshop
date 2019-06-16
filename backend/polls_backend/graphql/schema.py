@@ -21,12 +21,20 @@ class PollChoice (ObjectType):
 
     key = Field(String)
     text = Field(String)
+    vote_count = Field(Int)
 
     def resolve_key(choice, info):
         return choice['key']
 
     def resolve_text(choice, info):
         return choice['text']
+
+    async def resolve_vote_count(choice, info):
+        #return 42
+        #print("XXX choice:", choice)
+        model = info.context['request'].app['model']
+        count = await model.get_vote_count(choice['poll_id'], choice['key'])
+        return count
 
 
 class Poll (ObjectType):

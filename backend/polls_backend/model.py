@@ -32,6 +32,19 @@ class Model:
         await self.db['polls'].insert_one(doc)
         return Poll(doc)
 
+    async def get_vote_count(self, poll_id, choice_key):
+        return await self.db['votes'].count_documents({
+            'poll_id': poll_id,
+            'choice_key': choice_key,
+        })
+
+    async def create_vote(self, poll_id, choice_key):
+        doc = {
+            'poll_id': poll_id,
+            'choice_key': choice_key,
+        }
+        await self.db['votes'].insert_one(doc)
+
 
 class Poll:
     '''
@@ -43,4 +56,7 @@ class Poll:
     def __init__(self, doc):
         self.id = doc['_id']
         self.title = doc['title']
-        self.choices = doc.get('choices') or []
+        #self.choices = doc.get('choices') or []
+        self.choices = []
+        for choice in doc['choices']:
+            self.choices.append({**choice, 'poll_id': self.id})
