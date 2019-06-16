@@ -90,9 +90,37 @@ class CreatePoll (Mutation):
         return CreatePoll(poll=poll)
 
 
+class Vote (Mutation):
+
+    class Arguments:
+        poll_id = String(required=True)
+        choice_key = String(required=True)
+
+    poll = Field(Poll)
+
+    async def mutate(root, info, poll_id, choice_key):
+        model = info.context['request'].app['model']
+        await model.create_vote(poll_id=poll_id, choice_key=choice_key)
+        poll = await model.get_poll(poll_id)
+        return Vote(poll=poll)
+
+
 class Mutations (ObjectType):
 
     create_poll = CreatePoll.Field()
+    vote = Vote.Field()
 
 
 graphql_schema = Schema(query=Query, mutation=Mutations)
+
+
+
+
+
+
+
+
+
+
+
+#

@@ -35,13 +35,13 @@ class Model:
     async def get_vote_count(self, poll_id, choice_key):
         return await self.db['votes'].count_documents({
             'poll_id': poll_id,
-            'choice_key': choice_key,
+            'choice_key': str(choice_key),
         })
 
     async def create_vote(self, poll_id, choice_key):
         doc = {
             'poll_id': poll_id,
-            'choice_key': choice_key,
+            'choice_key': str(choice_key),
         }
         await self.db['votes'].insert_one(doc)
 
