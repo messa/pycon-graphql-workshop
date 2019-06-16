@@ -17,6 +17,18 @@ class Node (RelayNode):
         raise Exception(f'Unknown type: {instance!r}')
 
 
+class PollChoice (ObjectType):
+
+    key = Field(String)
+    text = Field(String)
+
+    def resolve_key(choice, info):
+        return choice['key']
+
+    def resolve_text(choice, info):
+        return choice['text']
+
+
 class Poll (ObjectType):
 
     class Meta:
@@ -29,6 +41,7 @@ class Poll (ObjectType):
 
     poll_id = Field(String)
     title = Field(String)
+    choices = Field(List(PollChoice))
 
     def resolve_poll_id(poll, info):
         return poll.id
@@ -59,12 +72,13 @@ class CreatePoll (Mutation):
 
     class Arguments:
         title = String()
+        choices = List(String)
 
     poll = Field(Poll)
 
-    async def mutate(root, info, title):
+    async def mutate(root, info, title, choices):
         model = info.context['request'].app['model']
-        poll = await model.create_poll(title=title)
+        poll = await model.create_poll(title=title, choices=choices)
         return CreatePoll(poll=poll)
 
 
